@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // User::factory(10)->create();
         Storage::deleteDirectory('posts');
         Storage::createDirectory('posts');
 
@@ -22,5 +23,6 @@ class DatabaseSeeder extends Seeder
         Category::factory(4)->create();
         Tag::factory(8)->create();
         $this->call(PostSeeder::class);
+        
     }
 }
