@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -34,5 +35,14 @@ class PostController extends Controller
                     ->paginate(6);
 
         return view('posts.category', compact('posts', 'category'));
+    }
+
+    public function tag(Tag $tag){
+        $posts = Post::where('status', 2)
+                    // ->where('tags', 'LIKE', "%{$tag}%")
+                    ->latest('id')
+                    ->paginate(6);
+
+        return view('posts.tag', compact('posts', 'tag'));
     }
 }
