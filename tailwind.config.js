@@ -24,5 +24,16 @@ export default {
 
     corePlugins:{
         container: false,
-    }    
+    },
+    
+    safelist: [
+        'bg-red-600',
+        'bg-green-600',
+        'bg-blue-600',
+        'bg-yellow-600',
+        'bg-indigo-600',
+        'bg-purple-600',
+        'bg-pink-600',
+        // Si quieres puedes agregar más aquí
+    ],
 };
