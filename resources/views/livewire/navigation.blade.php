@@ -51,6 +51,7 @@
 
                         <div x-show="open" x-transition @click.away="open = false" class="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 z-50">
                             <a href="{{ route('profile.show') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Tu perfil</a>
+                            <a href="{{ route('admin.home') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
                             <form method="POST" action="{{ route('logout') }}" x-data>
                                 @csrf
                                 <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" @click.prevent="$root.submit();">Cerrar Sesion</a>
