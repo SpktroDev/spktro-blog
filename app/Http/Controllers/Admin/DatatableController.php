@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Post;
+use Illuminate\Http\Request;
+
+class DatatableController extends Controller
+{
+    public function posts()
+    {
+        $posts = Post::select('id', 'name')->get();
+
+        // return datatables()->of($posts)->toJson();
+        $data = $posts->map(function ($post) {
+            return [
+                'id'      => $post->id,
+                'name'    => $post->name,
+                'edit'    => '<a href="'.route('admin.posts.edit', $post).'" class="btn btn-sm btn-primary">Editar</a>',
+                'delete'  => '<form method="POST" action="'.route('admin.posts.destroy', $post).'" style="display:inline">'
+                            .csrf_field()
+                            .method_field('DELETE')
+                            .'<button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'¿Eliminar este post?\')">Eliminar</button>'
+                            .'</form>',
+            ];
+        });
+
+        return response()->json(['data' => $data]);
+    }
+}
