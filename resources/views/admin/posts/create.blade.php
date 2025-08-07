@@ -8,6 +8,19 @@
         .hidden {
             display: none !important;
         }
+        .image-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 aspect ratio */
+        }
+        .image-wrapper img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            top: 0;
+            left: 0;
+        }
     </style>
 @endpush
 
@@ -18,7 +31,7 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <form action="{{ route('admin.posts.store') }}" method="POST">
+            <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="user_id" value="{{ auth()->user()->id }}" />
                 <div class="form-group">
@@ -76,6 +89,21 @@
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="image-wrapper">
+                            <img id="picture" src="https://cdn.pixabay.com/photo/2017/10/24/07/12/hacker-2883630_1280.jpg" alt="" />
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="file" class="btn btn-primary btn-block">Seleccionar imagen</label>
+                        <input type="file" name="file" id="file" class="hidden" accept="image/*" onchange="previewImage(event, '#picture')" />
+                        @error('file')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                        <p class="text-muted">La imagen debe ser menor a 2MB y formato jpg, png o jpeg</p>
+                    </div>
+                </div>
                 <div class="mb-2">
                     <p class="font-weight-bold text-sm mb-1">Extracto</p>
                     <div id="editorExtract">{!! old('extract') !!}</div>
@@ -125,5 +153,27 @@
         quillBody.on('text-change', function(){
             document.querySelector('#body').value = quillBody.root.innerHTML;
         });
+
+        function previewImage(event, querySelector){
+
+            //Recuperamos el input que desencadeno la acción
+            let input = event.target;
+            
+            //Recuperamos la etiqueta img donde cargaremos la imagen
+            let imgPreview = document.querySelector(querySelector);
+
+            // Verificamos si existe una imagen seleccionada
+            if(!input.files.length) return
+            
+            //Recuperamos el archivo subido
+            let file = input.files[0];
+
+            //Creamos la url
+            let objectURL = URL.createObjectURL(file);
+            
+            //Modificamos el atributo src de la etiqueta img
+            imgPreview.src = objectURL;
+                        
+        }
    </script>
 @stop

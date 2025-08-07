@@ -29,6 +29,7 @@ class StorePostRequest extends FormRequest
             'name' => 'required',
             'slug' => 'required|unique:posts,slug',
             'status' => 'required|in:1,2',
+            'file' => 'image',
         ];
 
         if($this->status == 2){
