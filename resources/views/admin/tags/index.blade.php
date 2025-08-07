@@ -3,7 +3,9 @@
 @section('title', 'Spktro Blog Admin')
 
 @section('content_header')
-    <a class="btn btn-info btn-sm float-right" href="{{ route('admin.tags.create') }}">Crear nueva etiqueta</a>
+    @can('admin.tags.create')
+        <a class="btn btn-info btn-sm float-right" href="{{ route('admin.tags.create') }}">Crear nueva etiqueta</a>
+    @endcan
     <h1>Mostrar listado de etiquetas</h1>
 @stop
 
@@ -29,14 +31,18 @@
                             <td>{{ $tag->id }}</td>
                             <td>{{ $tag->name }}</td>
                             <td width="10px">
-                                <a href="{{ route('admin.tags.edit', $tag) }}" class="btn btn-sm btn-primary">Editar</a>
+                                @can('admin.tags.edit')
+                                    <a href="{{ route('admin.tags.edit', $tag) }}" class="btn btn-sm btn-primary">Editar</a>
+                                @endcan
                             </td>
                             <td width="10px">
-                                <form action="{{ route('admin.tags.destroy', $tag) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
-                                </form>
+                                @can('admin.tags.destroy')
+                                    <form action="{{ route('admin.tags.destroy', $tag) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                                    </form>
+                                @endcan
                             </td>
                         </tr>                        
                     @endforeach
