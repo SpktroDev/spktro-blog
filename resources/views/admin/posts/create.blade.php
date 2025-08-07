@@ -19,6 +19,7 @@
     <div class="card">
         <div class="card-body">
             <form action="{{ route('admin.posts.store') }}" method="POST">
+                @csrf
                 <div class="form-group">
                     <label for="name">Nombre</label>
                     <input type="text" name="name" id="name" class="form-control" placeholder="Ingrese el nombre del post ..." value="{{ old('name') }}" autocomplete="off"/>
@@ -53,50 +54,39 @@
                             {{ $tag->name }}
                         </label>
                     @endforeach
+                    <br/>
+                    @error('tags')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
                 </div>
-                <div class="form-group">
-                    <div class="custom-control custom-radio">
-                        <input class="custom-control-input" type="radio" id="draft" name="status" value="1" />
+                <div class="form-group d-flex">
+                    <div class="custom-control custom-radio mr-2">
+                        <input class="custom-control-input" type="radio" id="draft" name="status" value="1" checked />
                         <label for="draft" class="custom-control-label">Borrador</label>
                     </div>
-                    <div class="custom-control custom-radio">
+                    <div class="custom-control custom-radio ml-2">
                         <input class="custom-control-input" type="radio" id="published" name="status" value="2" />
                         <label for="published" class="custom-control-label">Publicado</label>
                     </div>
+                    @error('status')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
                 </div>
-                <div class="from-group">
-                    <label>
-                        <input type="radio" name="status" value="1" class="form-control-file"/>
-                        <span class="ml-1">Borrador</span>
-                    </label>
-                    <label>
-                        <input type="radio" name="status" value="2" class="form-control-file"/>
-                        <span class="ml-1">Publicado</span>
-                    </label>
-                </div>
-                {{-- <div>
-                    <p class="text-sm font-medium mb-1">Estado</p>
-                    <div class="flex space-x-3">
-                        <label class="flex item-centers">
-                            <input type="radio" name="is_published" value="0" @checked(old('is_published', $post->is_published) == 0)/>
-                            <span class="ml-1">No publicado</span>
-                        </label>
-                        <label class="flex item-centers">
-                            <input type="radio" name="is_published" value="1" @checked(old('is_published', $post->is_published) == 1)/>
-                            <span class="ml-1">Publicado</span>
-                        </label>
-                    </div>
-                </div> --}}
-
                 <div class="mb-2">
                     <p class="font-weight-bold text-sm mb-1">Extracto</p>
                     <div id="editorExtract">{!! old('extract') !!}</div>
                     <textarea name="extract" id="extract" class="hidden">{{old('extract')}}</textarea>
+                    @error('extract')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
                 </div>
                 <div class="mb-2">
                     <p class="font-weight-bold text-sm mb-1">Cuerpo del post</p>
                     <div id="editorBody">{!! old('body') !!}</div>
                     <textarea name="body" id="body" class="hidden">{{old('body')}}</textarea>
+                    @error('body')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
                 </div>
                 <button type="submit" class="btn btn-primary mt-3">Crear post</button>
             </form>
