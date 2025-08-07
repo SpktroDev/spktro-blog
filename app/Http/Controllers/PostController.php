@@ -7,8 +7,12 @@ use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 class PostController extends Controller
 {
+    use AuthorizesRequests;
+    
     public function index(){
         $posts = Post::where('status', 2)->latest('id')->paginate(8);
 
@@ -16,7 +20,7 @@ class PostController extends Controller
     }
 
     public function show(Post $post){
-        // /*$this->authorize('published', $post);
+        $this->authorize('published', $post);
 
         $similares = Post::where('category_id', $post->category_id)
                         ->where('status', 2)
