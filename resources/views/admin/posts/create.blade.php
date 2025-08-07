@@ -20,6 +20,7 @@
         <div class="card-body">
             <form action="{{ route('admin.posts.store') }}" method="POST">
                 @csrf
+                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}" />
                 <div class="form-group">
                     <label for="name">Nombre</label>
                     <input type="text" name="name" id="name" class="form-control" placeholder="Ingrese el nombre del post ..." value="{{ old('name') }}" autocomplete="off"/>
@@ -37,7 +38,7 @@
                 <div class="form-group">
                     <label for="category_id">Categoria</label>
                     <select name="category_id" id="category_id" class="form-control">
-                        <option value="">Seleccione una categoria</option>
+                        {{-- <option value="">Seleccione una categoria</option> --}}
                         @foreach ($categories as $key => $category)
                             <option value="{{ $key }}" {{ old('category_id') == $key ? 'selected' : '' }}>{{ ucfirst($category) }}</option>
                         @endforeach
@@ -59,13 +60,16 @@
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
+                @php
+                    $status = old('status', $post->status ?? '1'); // '1' por defecto si no hay nada
+                @endphp
                 <div class="form-group d-flex">
                     <div class="custom-control custom-radio mr-2">
-                        <input class="custom-control-input" type="radio" id="draft" name="status" value="1" checked />
+                        <input class="custom-control-input" type="radio" id="draft" name="status" value="1" {{ $status == '1' ? 'checked' : '' }} />
                         <label for="draft" class="custom-control-label">Borrador</label>
                     </div>
                     <div class="custom-control custom-radio ml-2">
-                        <input class="custom-control-input" type="radio" id="published" name="status" value="2" />
+                        <input class="custom-control-input" type="radio" id="published" name="status" value="2" {{ $status == '2' ? 'checked' : '' }} />
                         <label for="published" class="custom-control-label">Publicado</label>
                     </div>
                     @error('status')

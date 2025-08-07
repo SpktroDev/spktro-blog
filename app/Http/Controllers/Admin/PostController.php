@@ -35,7 +35,14 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        return "Las validaciones pasaron con exito";
+        $post = Post::create($request->all());
+
+        if($request->tags){
+            $post->tags()->attach($request->tags);
+        }
+
+        return redirect()->route('admin.posts.edit', $post)
+            ->with('info', 'El post se creó con éxito.');
     }
 
     /**
