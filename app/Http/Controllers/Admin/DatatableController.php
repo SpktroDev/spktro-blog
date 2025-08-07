@@ -10,8 +10,11 @@ class DatatableController extends Controller
 {
     public function posts()
     {
-        $posts = Post::select('id', 'name')->get();
-
+        $posts = Post::select('id', 'name')
+            ->where('user_id', auth()->id())
+            ->latest('id')
+            ->get();
+            
         // return datatables()->of($posts)->toJson();
         $data = $posts->map(function ($post) {
             return [

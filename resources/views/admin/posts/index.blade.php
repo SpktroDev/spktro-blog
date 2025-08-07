@@ -2,15 +2,16 @@
 
 @section('title', 'Spktro Blog Admin')
 
-@section('content_header')
-    <a class="btn btn-info btn-sm float-right" href="{{ route('admin.posts.create') }}">Nuevo post</a>
-    <h1>Listado de posts</h1>
-@stop
 @section('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.5/css/responsive.bootstrap4.css">
 @endsection
+
+@section('content_header')
+    <a class="btn btn-info btn-sm float-right" href="{{ route('admin.posts.create') }}">Nuevo post</a>
+    <h1>Listado de posts</h1>
+@stop
 
 @section('content')
     <div class="card">

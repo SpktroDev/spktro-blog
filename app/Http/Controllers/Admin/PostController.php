@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -13,10 +15,7 @@ class PostController extends Controller
      */
     public function index()
     { 
-        $posts = Post::where('user_id', auth()->id())
-            ->latest('id')
-            ->paginate(10);
-        return view('admin.posts.index', compact('posts'));
+        return view('admin.posts.index');
     }
 
     /**
@@ -24,7 +23,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::pluck('name', 'id');
+        $tags = Tag::all(); 
+        
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
