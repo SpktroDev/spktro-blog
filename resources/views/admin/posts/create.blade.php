@@ -33,7 +33,6 @@
         <div class="card-body">
             <form action="{{ route('admin.posts.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}" />
                 @include('admin.posts.partials.form')
                 <button type="submit" class="btn btn-primary mt-3">Crear post</button>
             </form>
