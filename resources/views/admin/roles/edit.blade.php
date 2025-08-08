@@ -7,14 +7,19 @@
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
-@stop
-
-@section('css')
-    {{-- Add here extra stylesheets --}}
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
-@stop
-
-@section('js')
-    <script> console.log("Hi, I'm using the Laravel-AdminLTE package!"); </script>
+    @if (session('info'))
+        <div class="alert alert-success">
+            <strong>{{ session('info') }}</strong>
+        </div>
+    @endif
+    <div class="card">
+        <div class="card-body">
+            <form action="{{ route('admin.roles.update', $role) }}" method="POST">
+                @csrf
+                @method('PUT')
+                @include('admin.roles.partials.form')
+                <button type="submit" class="btn btn-primary mt-3">Actualizar role</button>
+            </form>
+        </div>
+    </div>
 @stop
